@@ -1,0 +1,87 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(124, 89, 218);
+    width: 100%;
+    min-height: 100vh;
+}
+
+.update-container {
+    width: 420px;
+    padding: 25px;
+    background-color: beige;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.update-title {
+    margin-bottom: 20px;
+}
+
+.update-form {
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    width: 140px;
+    font-weight: bold;
+}
+
+.form-group input {
+    flex: 1;
+    padding: 7px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.pay-group {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(124, 89, 218);
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(100, 70, 200);
+}
+
+.delete-btn {
+    background-color: rgb(200, 60, 60);
+}
+
+.delete-btn:hover {
+    background-color: rgb(170, 40, 40);
+}
+
+.back-link {
+    margin-top: 15px;
+    text-decoration: none;
+    background-color: rgb(124, 89, 218);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.back-link:hover {
+    background-color: rgb(100, 70, 200);
+}

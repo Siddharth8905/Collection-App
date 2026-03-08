@@ -1,0 +1,84 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: rgb(124, 89, 218);
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 40px;
+}
+
+.view-container {
+    width: 90%;
+    max-width: 1000px;
+    background-color: beige;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+}
+
+.view-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-box input {
+    padding: 8px;
+    width: 250px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.customer-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.customer-table th {
+    background-color: rgb(124, 89, 218);
+    color: white;
+    padding: 10px;
+}
+
+.customer-table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.customer-table tr:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+.customer-table button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(124, 89, 218);
+    color: white;
+    cursor: pointer;
+}
+
+.customer-table button:hover {
+    background-color: rgb(100, 70, 200);
+}
+
+.summary {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.back-link {
+    text-decoration: none;
+    background-color: rgb(124, 89, 218);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+}

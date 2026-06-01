@@ -7,16 +7,42 @@ export default function UpdateCustomer() {
 
     const { id } = useParams()
     const [customer, setCustomer] = useState(null)
-    const [payment, setPayment] = useState(0)
+    const [payment, setPayment] = useState("")
     const navigate = useNavigate()
+    const [name,Setname]=useState(localStorage.getItem("financename") || "")
+    const [transactions, setTransactions] = useState([])
 
     useEffect(() => {
-        fetchcust()
-    }, [id])
+        if (!name) {
+            alert("Finance name missing. Please login again.")
+            navigate("/")
+        }
+    }, [name])
+
+    useEffect(() => {
+        if (name) {
+            fetchcust()
+            fetchTransactions()
+        }
+    }, [id, name])
 
     const fetchcust = async () => {
-        const res = await axios.get(`http://localhost:1008/customer/getcustomer/${id}`)
+        const res = await axios.get(`http://localhost:1008/customer/getcustomer/${name}/${id}`)
         setCustomer(res.data)
+        // DEFAULT VALUE = INSTALLMENT
+        setPayment(res.data.installment)
+
+    }
+    const fetchTransactions = async () => {
+        try {
+            const res = await axios.get(
+                `http://localhost:1008/customer/transactions/${name}/${id}`
+            )
+            setTransactions(res.data)
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 
     const updateBalance = async () => {
@@ -33,14 +59,54 @@ export default function UpdateCustomer() {
 
         try {
 
-            const newbalance = customer.balance - payAmount
-            const newpaid = customer.paid + payAmount
+            const currentBalance = Number(customer.balance)
+            // const currentPaid = Number(customer.paid)
+
+            const newbalance = currentBalance - payAmount
+            // const newpaid = currentPaid + payAmount
 
             await axios.put(
-                `http://localhost:1008/customer/updatebalance/${id}`,
+                `http://localhost:1008/customer/updatebalance/${name}/${id}`,
                 {
                     balance: newbalance,
-                    paid: newpaid
+                    // paid: newpaid
+                    amount: payAmount,
+                    type: "payment"
+                }
+            )
+
+            await fetchcust()
+            await fetchTransactions()
+            alert("Balance Updated")
+            navigate("/Viewcustomer")
+
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    const withdrawBalance = async () => {
+
+        const reduceamt=Number(prompt("enter amt to withdraw:"))
+        if(!reduceamt || reduceamt<=0){
+            return alert("Enter a valid amount")
+        }
+        try {
+
+            const currentBalance = Number(customer.balance)
+            // const currentPaid = Number(customer.paid)
+
+            const newbalance = currentBalance + reduceamt
+            // const newpaid = currentPaid - reduceamt
+
+            await axios.put(
+                `http://localhost:1008/customer/updatebalance/${name}/${id}`,
+                {
+                    balance: newbalance,
+                    amount: reduceamt,
+                    type: "withdraw"
+                    // paid: newpaid
                 }
             )
 
@@ -56,13 +122,25 @@ export default function UpdateCustomer() {
 
     const deleteCustomer = async () => {
         try {
-            await axios.delete(`http://localhost:1008/customer/deleteCustomer/${id}`)
-            alert("Customer Deleted")
-            navigate("/Dashboard")
+            const confirm=window.confirm("Do you want to delete the customer ?")
+            if(confirm){
+                
+                await axios.delete(`http://localhost:1008/customer/deleteCustomer/${name}/${id}`)
+                alert("Customer Deleted")
+                navigate("/Dashboard")
+            }
+            else {
+                alert("process terminated !")
+            }
         }
         catch (err) {
             console.log(err)
         }
+    }
+    const renewcustomer=()=>{
+        navigate(`/RenewCustomer/${id}`,{
+            state :{customer}
+        })
     }
 
     if (!customer) {
@@ -71,16 +149,28 @@ export default function UpdateCustomer() {
 
     return (
         <div className="main">
+            <div className="details-wrapper">
 
-            <div className="update-container">
+                {/* LEFT SIDE */}
+                <div className="update-container">
 
-                <h1 className="update-title">Customer Details</h1>
+                <h1 className="update-title">{name} Customer Details</h1>
 
                 <form className="update-form">
 
                     <div className="form-group">
                         <label>Name:</label>
                         <input type="text" value={customer.cust_name} readOnly />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Number:</label>
+                        <input type="text" value={customer.cust_number} readOnly />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Location:</label>
+                        <input type="text" value={customer.cust_location} readOnly />
                     </div>
 
                     <div className="form-group">
@@ -92,6 +182,10 @@ export default function UpdateCustomer() {
                         <label>Interest:</label>
                         <input type="text" value={customer.cust_interest} readOnly />
                     </div>
+                    <div className="form-group">
+                        <label>Start Date:</label>
+                        <input type="text" value={new Date(customer.start_date).toLocaleDateString("en-GB")} readOnly />
+                    </div>
 
                     <div className="form-group">
                         <label>Installment:</label>
@@ -100,7 +194,8 @@ export default function UpdateCustomer() {
 
                     <div className="form-group">
                         <label>Amount Paid:</label>
-                        <input type="text" value={customer.paid} readOnly />
+                        {/* customer.paid */}
+                        <input type="text" value={customer.cust_amt-customer.balance} readOnly /> 
                     </div>
 
                     <div className="form-group">
@@ -113,6 +208,10 @@ export default function UpdateCustomer() {
                         <div className="pay-group">
                             <button type="button" className="delete-btn" onClick={deleteCustomer}>
                                 Delete
+                            </button>
+
+                            <button type="button" className="delete-btn" onClick={renewcustomer} >
+                                Renew Customer
                             </button>
                         </div>
 
@@ -130,19 +229,74 @@ export default function UpdateCustomer() {
                             <button type="button" onClick={updateBalance}>
                                 Pay
                             </button>
+                            <button type="button" onClick={withdrawBalance}>
+                                WithDraw
+                            </button><br/>
+                            <Link className="back-link" to="/Viewcustomer">Back</Link>
+                        </div>
+                        
+
+                    )}
+                    </form>
+
+                    </div>
+
+                    {/* RIGHT SIDE */}
+                    <div className="transaction-panel">
+
+                        <h2 className="transaction-title">
+                            Transaction History
+                        </h2>
+
+                        <div className="transaction-list">
+
+                            {
+                                transactions.length > 0 ? (
+
+                                    transactions.map((t) => (
+
+                                        <div
+                                            key={t._id}
+                                            className="transaction-card"
+                                        >
+
+                                            <p>
+                                                Type : {t.type}
+                                            </p>
+
+                                            <p>
+                                                Amount : ₹{t.amount}
+                                            </p>
+
+                                            <p>
+                                                Date :
+                                                {
+                                                    new Date(
+                                                        t.payment_date
+                                                    ).toLocaleDateString("en-GB")
+                                                }
+                                            </p>
+
+                                        </div>
+
+                                    ))
+
+                                ) : (
+
+                                    <p>No Transactions Found</p>
+                                )
+                            }
 
                         </div>
 
-                    )}
-
-                </form>
-
-                <Link className="back-link" to="/Viewcustomer">
-                    Back
-                </Link>
+                    </div>
+                
+                </div>
+                
+                
 
             </div>
 
-        </div>
+        
     )
 }

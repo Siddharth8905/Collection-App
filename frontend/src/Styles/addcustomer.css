@@ -5,14 +5,18 @@
     background-color: rgb(124, 89, 218);
     width: 100%;
     min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .add-container {
-    width: 450px;
+    width: 100%;
+    max-width: 450px;
     padding: 25px;
     background-color: beige;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    box-sizing: border-box;
 }
 
 .add-title {
@@ -28,6 +32,7 @@
 .form-group {
     display: flex;
     align-items: center;
+    gap: 10px;
     margin-bottom: 12px;
 }
 
@@ -42,6 +47,8 @@
     padding: 7px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 button {
@@ -52,6 +59,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 100%;
 }
 
 button:hover {
@@ -75,4 +83,32 @@ button:hover {
 .status-msg {
     margin-top: 10px;
     font-weight: bold;
+}
+
+/* Mobile Responsive */
+
+@media screen and (max-width: 600px) {
+
+    .add-container {
+        padding: 18px;
+    }
+
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+    }
+
+    .add-title {
+        font-size: 22px;
+    }
 }

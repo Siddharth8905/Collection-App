@@ -6,6 +6,8 @@ import "../Styles/addcustomer.css"
 export default function AddCustomer() {
 
     const [custname, setCustname] = useState("")
+    const[number,setNumber]=useState(0)
+    const[location,setLocation]=useState("")
     const [amount, setAmount] = useState(0)
     const [detectedamt, setDetectedamt] = useState("")
     const [percentage, setPercentage] = useState(0)
@@ -15,7 +17,7 @@ export default function AddCustomer() {
     const [balance, setBalance] = useState("")
     const [status, setstatus] = useState("")
     const [paid, Setpaid] = useState(0)
-
+    const [name,Setname]=useState(localStorage.getItem("financename") || "")
     const navigate = useNavigate()
 
     const daysMap = {
@@ -76,12 +78,15 @@ export default function AddCustomer() {
         if (!custname || !amount || !percentage || !type || !startDate) {
             return alert("Fill all the fields")
         }
+        if (!name) {
+            return alert("Finance name missing. Please login again.")
+        }
 
         try {
 
             const s = {
-                cust_name: custname, cust_amt: amount, cust_interest: percentage, collection_type: type, amount_given: detectedamt, start_date: startDate.toISOString(), end_date: endDate.toISOString(), 
-                installment, balance, paid
+                cust_name: custname, cust_number:number,cust_location:location ,cust_amt: amount, cust_interest: percentage, collection_type: type, amount_given: detectedamt, start_date: startDate.toISOString(), end_date: endDate.toISOString(), 
+                installment:Number(installment), balance: Number(balance), paid: Number(paid),financename:name
             }
 
             const r = await axios.post("http://localhost:1008/customer/registercustomer", s)
@@ -113,7 +118,7 @@ export default function AddCustomer() {
         <div className="main">
 
             <div className="add-container">
-
+                {name}
                 <h1 className="add-title">Add Customer</h1>
 
                 <form className="add-form" onSubmit={savedata}>
@@ -121,6 +126,16 @@ export default function AddCustomer() {
                     <div className="form-group">
                         <label>Name:</label>
                         <input type="text" required onChange={(e) => setCustname(e.target.value)} />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Number:</label>
+                        <input type="text" required  minLength={10} maxLength={10} onChange={(e) => setNumber(e.target.value)} />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Location:</label>
+                        <input type="text" required onChange={(e) => setLocation(e.target.value)} />
                     </div>
 
                     <div className="form-group">

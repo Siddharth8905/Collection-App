@@ -25,7 +25,9 @@ const Signup = () => {
             return alert("Enter all the required credentials")
         }
         try{
-            const s={admin_name,finance_name,admin_email,admin_password}
+            const formattedFinanceName = finance_name.trim().toLowerCase().replace(/\s+/g, "_")
+            console.log("Formatted Finance Name:", formattedFinanceName)
+            const s={admin_name,finance_name:formattedFinanceName,admin_email,admin_password}
             const r= await axios.post("http://localhost:1008/admin/savedata",s)
             console.log(r)
             console.log(r.data.msg)

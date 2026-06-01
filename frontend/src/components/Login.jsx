@@ -19,16 +19,27 @@ const Login=()=>{
             const user={admin_email:admin_email,admin_password:admin_password}
             console.log(user)
             const result=await axios.post("http://localhost:1008/admin/adminlogin",user)
-            if(result.data.msg=="Invalid Password"){
+            if(result.data.msg==="Invalid Password"){
                 set_status("Invalid Password")
                 alert("Invalid Password")
             }
-            else if(result.data.msg=="Admin email not found"){
+            else if(result.data.msg==="Admin email not found"){
                 set_status("User Not found")
                 alert("admin not found")
             }
             else{
                 set_status("Login Success")
+                const financeName = result.data.data?.finance_name
+
+                if (!financeName) {
+                    alert("Finance name missing from server")
+                    return
+                }
+                // console.log(result)
+                // console.log(result.data.data.finance_name)
+                // localStorage.setItem("financename",result.data.data.finance_name)
+                localStorage.setItem("financename", financeName)
+
                 navigate("/Dashboard")
             }
 

@@ -23,13 +23,14 @@ const register_admin=async(req,res)=>{
 const admin_login=async(req,res)=>{
     try{
         const {admin_email,admin_password}=req.body
-        const admin= await Admin.findOne({admin_email})
+        const admin= await Admin.findOne({admin_email}) 
+        console.log(admin)
         if(!admin) return res.json({msg:"Admin email not found"})
             
         else if(admin_password!=admin.admin_password) return res.json({msg:"Invalid Password"})
     
         else{
-            res.json({msg:"Login Success"})
+            res.json({msg:"Login Success",data:admin})
         }
     }
     catch(err){

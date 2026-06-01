@@ -1,7 +1,15 @@
 const mongoose=require("mongoose")
 
-const dataschema=mongoose.Schema({
+const customerSchema = mongoose.Schema({
     cust_name:{
+        type:String,
+        required:true
+    },
+    cust_number:{
+        type:String,
+        required:true
+    },
+    cust_location:{
         type:String,
         required:true
     },
@@ -37,10 +45,18 @@ const dataschema=mongoose.Schema({
         type:Number,
         required:true
     },
-    paid:{
-        type:Number,
-        required:true
+    financename:{
+        type:String
     }
-
 })
-module.exports=mongoose.model("Customer_Details",dataschema)
+
+// Dynamic model creation function
+const getCustomerModel = (financename) => {
+    if (!financename) {
+        throw new Error('Finance name is required');
+    }
+    const modelName = `Customer_${financename.replace(/[^a-zA-Z0-9]/g, '_')}`;
+    return mongoose.models[modelName] || mongoose.model(modelName, customerSchema);
+};
+
+module.exports = getCustomerModel;

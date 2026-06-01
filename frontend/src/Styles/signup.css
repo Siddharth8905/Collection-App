@@ -4,11 +4,14 @@
     align-items: center;
     background-color: rgb(124, 89, 218);
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .container {
-    width: 450px; /* Fixed width looks cleaner for forms */
+    width: 100%;
+    max-width: 450px;
     padding: 20px;
     background-color: beige;
     border-radius: 10px;
@@ -16,6 +19,7 @@
     flex-direction: column;
     align-items: center;
     box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    box-sizing: border-box;
 }
 
 .loginform {
@@ -24,29 +28,33 @@
     align-items: center;
     width: 100%;
     padding: 20px;
+    box-sizing: border-box;
 }
 
-/* This creates the straight line alignment */
+/* Form Alignment */
+
 .form-group {
     display: flex;
     align-items: center;
     width: 100%;
-    margin-bottom: 15px; /* Spacing between rows */
+    margin-bottom: 15px;
+    gap: 10px;
 }
 
 .form-group label {
-    width: 130px;      /* Fixed width for all labels */
-    text-align: right; /* Aligns text to the right side of the label box */
-    margin-right: 15px; 
+    width: 130px;
+    text-align: right;
     font-weight: bold;
 }
 
 .form-group input {
-    flex: 1;           /* Makes all inputs take up the remaining equal space */
+    flex: 1;
+    width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
     outline: none;
+    box-sizing: border-box;
 }
 
 .signup-btn {
@@ -58,9 +66,46 @@
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
+    transition: 0.3s;
+}
+
+.signup-btn:hover {
+    background-color: rgb(100, 70, 200);
 }
 
 .login-link {
     margin-top: 15px;
     font-size: 0.9rem;
+    text-align: center;
+}
+
+/* Mobile Responsive */
+
+@media screen and (max-width: 600px) {
+
+    .container {
+        padding: 18px;
+    }
+
+    .loginform {
+        padding: 10px;
+    }
+
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group label {
+        width: 100%;
+        text-align: left;
+    }
+
+    .form-group input {
+        width: 100%;
+    }
+
+    .signup-btn {
+        width: 100%;
+    }
 }

@@ -9,6 +9,7 @@ import Dashboard from './components/Dashboard'
 import AddCustomer from './components/AddCustomer'
 import ViewCustomer from './components/ViewCustomer'
 import UpdateCustomer from './components/Updatecustomer'
+import RenewCustomer from './components/RenewCustomer'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -23,6 +24,7 @@ function App() {
         <Route path='/AddCustomer' element={<AddCustomer/>}></Route>
         <Route path='/Viewcustomer' element={<ViewCustomer/>}></Route>
         <Route path='/Updatecustomer/:id' element={<UpdateCustomer/>}></Route>
+        <Route path='/RenewCustomer/:id' element={<RenewCustomer/>}></Route>
       </Routes>
       </BrowserRouter>
     </>

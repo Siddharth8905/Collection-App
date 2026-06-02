@@ -1,9 +1,10 @@
 import React, { useState,useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import "../Styles/dashboard.css"
 
 export default function Dashboard() {
   const [name,Setname]=useState(localStorage.getItem("financename") || "")
+  const navigate = useNavigate()
   useEffect(() => {
     if (!name) {
       alert("Please login first")

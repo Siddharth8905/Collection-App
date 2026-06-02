@@ -8,7 +8,7 @@ import Login from './components/Login'
 import Dashboard from './components/Dashboard'
 import AddCustomer from './components/AddCustomer'
 import ViewCustomer from './components/ViewCustomer'
-import UpdateCustomer from './components/Updatecustomer'
+import UpdateCustomer from './components/UpdateCustomer'
 import RenewCustomer from './components/RenewCustomer'
 
 function App() {

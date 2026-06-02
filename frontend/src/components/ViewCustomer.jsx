@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../services/api'
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import "../Styles/viewcutomer.css"
@@ -40,7 +40,7 @@ export default function ViewCustomer() {
         try {
 
             const res = await axios.get(
-                `http://localhost:1008/customer/getcustomers/${name}`
+                `/customer/getcustomers/${name}`
             )
 
             console.log("API DATA:", res.data)
@@ -108,7 +108,7 @@ export default function ViewCustomer() {
 
             // API CALL
             await axios.put(
-                `http://localhost:1008/customer/updatebalance/${name}/${cust._id}`,
+                `/customer/updatebalance/${name}/${cust._id}`,
                 {
                     balance: newBalance,
                     amount: payAmount,

@@ -1,5 +1,5 @@
 import React,{useEffect, useState}from "react";
-import axios from 'axios'
+import axios from '../services/api'
 import { Link,useNavigate } from 'react-router-dom'
 import "../Styles/signup.css"
 
@@ -28,7 +28,7 @@ const Signup = () => {
             const formattedFinanceName = finance_name.trim().toLowerCase().replace(/\s+/g, "_")
             console.log("Formatted Finance Name:", formattedFinanceName)
             const s={admin_name,finance_name:formattedFinanceName,admin_email,admin_password}
-            const r= await axios.post("http://localhost:1008/admin/savedata",s)
+            const r= await axios.post("/admin/savedata",s)
             console.log(r)
             console.log(r.data.msg)
             

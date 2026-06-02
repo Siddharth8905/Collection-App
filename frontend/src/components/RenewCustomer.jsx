@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../services/api'
 import "../Styles/update.css"
 
 import {Link, useParams, useNavigate, useLocation} from 'react-router-dom'
@@ -125,7 +125,7 @@ export default function RenewCustomer() {
                 balance:customer.balance
             }
 
-            await axios.put( `http://localhost:1008/customer/updatecustomer/${name}/${id}`, updatedCustomer )
+            await axios.put( `/customer/updatecustomer/${name}/${id}`, updatedCustomer )
             alert(
                 "Customer Renewed Successfully"
             )

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../services/api'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import "../Styles/update.css"
 
@@ -27,7 +27,7 @@ export default function UpdateCustomer() {
     }, [id, name])
 
     const fetchcust = async () => {
-        const res = await axios.get(`http://localhost:1008/customer/getcustomer/${name}/${id}`)
+        const res = await axios.get(`/customer/getcustomer/${name}/${id}`)
         setCustomer(res.data)
         // DEFAULT VALUE = INSTALLMENT
         setPayment(res.data.installment)
@@ -36,7 +36,7 @@ export default function UpdateCustomer() {
     const fetchTransactions = async () => {
         try {
             const res = await axios.get(
-                `http://localhost:1008/customer/transactions/${name}/${id}`
+                `/customer/transactions/${name}/${id}`
             )
             setTransactions(res.data)
         }
@@ -66,7 +66,7 @@ export default function UpdateCustomer() {
             // const newpaid = currentPaid + payAmount
 
             await axios.put(
-                `http://localhost:1008/customer/updatebalance/${name}/${id}`,
+                `/customer/updatebalance/${name}/${id}`,
                 {
                     balance: newbalance,
                     // paid: newpaid
@@ -101,7 +101,7 @@ export default function UpdateCustomer() {
             // const newpaid = currentPaid - reduceamt
 
             await axios.put(
-                `http://localhost:1008/customer/updatebalance/${name}/${id}`,
+                `/customer/updatebalance/${name}/${id}`,
                 {
                     balance: newbalance,
                     amount: reduceamt,
@@ -125,7 +125,7 @@ export default function UpdateCustomer() {
             const confirm=window.confirm("Do you want to delete the customer ?")
             if(confirm){
                 
-                await axios.delete(`http://localhost:1008/customer/deleteCustomer/${name}/${id}`)
+                await axios.delete(`/customer/deleteCustomer/${name}/${id}`)
                 alert("Customer Deleted")
                 navigate("/Dashboard")
             }

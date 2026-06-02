@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from "react";
-import axios from "axios";
+import axios from "../services/api";
 import { Link, useNavigate } from "react-router-dom";
 import "../Styles/signup.css"
 
@@ -18,7 +18,7 @@ const Login=()=>{
         try{
             const user={admin_email:admin_email,admin_password:admin_password}
             console.log(user)
-            const result=await axios.post("http://localhost:1008/admin/adminlogin",user)
+            const result=await axios.post("/admin/adminlogin",user)
             if(result.data.msg==="Invalid Password"){
                 set_status("Invalid Password")
                 alert("Invalid Password")

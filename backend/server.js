@@ -9,7 +9,8 @@ dotenv.config();
 
 const app= express();
 
-app.use(cors({ origin: "http://localhost:5173" }));
+const allowedOrigin = process.env.FRONTEND_URL || "http://localhost:5173";
+app.use(cors({ origin: allowedOrigin }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -22,7 +23,7 @@ app.use("/admin", router);
 app.use("/customer",customer_router);
 
 
-const port = 1008;
+const port = process.env.PORT || 1008;
 app.listen(port, () => {
   console.log("Server started at port:", port);
 });

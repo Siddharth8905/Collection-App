@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../services/api'
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import "../Styles/addcustomer.css"
@@ -89,7 +89,7 @@ export default function AddCustomer() {
                 installment:Number(installment), balance: Number(balance), paid: Number(paid),financename:name
             }
 
-            const r = await axios.post("http://localhost:1008/customer/registercustomer", s)
+            const r = await axios.post("/customer/registercustomer", s)
 
             if (r.data.msg === "Customer added") {
                 setstatus("Customer Registered Successfully")

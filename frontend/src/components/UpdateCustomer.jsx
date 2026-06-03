@@ -213,6 +213,7 @@ export default function UpdateCustomer() {
                             <button type="button" className="delete-btn" onClick={renewcustomer} >
                                 Renew Customer
                             </button>
+                            <Link className="back-link" to="/Viewcustomer">Back</Link>
                         </div>
 
                     ) : (

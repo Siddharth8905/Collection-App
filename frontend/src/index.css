@@ -1,4 +1,28 @@
-body{
+:root {
+  --primary-navy: #0b132b;       /* Deep Navy Blue background */
+  --secondary-navy: #1c2541;     /* Lighter navy for cards/containers */
+  --accent-gold: #c5a880;        /* Gold/Bronze accent color */
+  --accent-gold-hover: #d4af37;  /* Hover Gold */
+  --accent-green: #1b4332;       /* Forest Green (from shield) */
+  --accent-green-hover: #2d6a4f; /* Hover Green */
+  --text-light: #f8f9fa;         /* Primary off-white text */
+  --text-muted: #a0aec0;         /* Gray text */
+  --border-gold: rgba(197, 168, 128, 0.25); /* Semi-transparent gold border */
+  --font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+  --transition: all 0.3s ease;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+body {
   margin: 0;
   padding: 0;
+  font-family: var(--font-family);
+  background-color: var(--primary-navy);
+  color: var(--text-light);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }

@@ -51,20 +51,29 @@ const Login=()=>{
     
     return (
     <div className="main">
-        <div className="container">
-            <h1>Login</h1>
-            <form onSubmit={(e) => login(e)} className="loginform">                
-                <div className="form-group">
-                    <label>Admin Email :</label><input type="email" placeholder="Admin email" required onChange={(e)=>{setadmin_email(e.target.value)}} />
-                </div>
-                <div className="form-group">
-                    <label>Admin Password :</label><input type="password" placeholder="Password" required onChange={(e)=>{setadmin_password(e.target.value)}} />
-                </div>
-                <button type="submit" className="signup-btn"> Login </button>
-                <div className="footer-text">
-                    New User ? <Link to="/">Signup</Link>
-                </div>
-            </form>
+        <div className="split-container">
+            <div className="form-side">
+                <h1 className="form-title">Hello Again!</h1>
+                <p className="form-subtitle">Login to manage your collections</p>
+                <form onSubmit={(e) => login(e)} className="auth-form">                
+                    <div className="input-group">
+                        <input type="email" placeholder="Admin Email" required onChange={(e)=>{setadmin_email(e.target.value)}} />
+                    </div>
+                    <div className="input-group">
+                        <input type="password" placeholder="Password" required onChange={(e)=>{setadmin_password(e.target.value)}} />
+                    </div>
+                    
+                    {status && <div className="status-msg">{status}</div>}
+                    
+                    <button type="submit" className="auth-btn"> Login </button>
+                    <div className="auth-redirect">
+                        New User? <Link to="/">Signup</Link>
+                    </div>
+                </form>
+            </div>
+            <div className="image-side">
+                <img src="/fincollect_logo.png" alt="Fincollect Logo" className="display-image" />
+            </div>
         </div>
     </div>
 )

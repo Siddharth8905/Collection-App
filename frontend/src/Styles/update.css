@@ -1,127 +1,297 @@
-.main {
+.details-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(124, 89, 218);
+    gap: 30px;
+    align-items: flex-start;
     width: 100%;
-    min-height: 100vh;
-    padding: 20px;
+    max-width: 1100px;
     box-sizing: border-box;
+    animation: fadeInUp 0.6s ease-out;
 }
 
 .update-container {
-    width: 100%;
-    max-width: 420px;
-    padding: 25px;
-    background-color: beige;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    flex: 1.2;
+    padding: 40px;
+    background-color: var(--secondary-navy);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-gold);
     display: flex;
     flex-direction: column;
-    align-items: center;
     box-sizing: border-box;
 }
 
 .update-title {
-    margin-bottom: 20px;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0 0 30px 0;
+    color: var(--text-light);
     text-align: center;
+    background: linear-gradient(135deg, #ffffff 0%, var(--accent-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .update-form {
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-group {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
 .form-group label {
     width: 140px;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-muted);
 }
 
 .form-group input,
 .form-group select {
     flex: 1;
     width: 100%;
-    padding: 7px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    padding: 12px 16px;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    color: var(--text-light);
+    font-size: 0.95rem;
+    outline: none;
+    transition: var(--transition);
+    font-family: var(--font-family);
     box-sizing: border-box;
 }
 
+.form-group input[readOnly] {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.03);
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--accent-gold);
+}
+
 .pay-group {
-    margin-top: 15px;
+    margin-top: 25px;
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 12px;
     width: 100%;
 }
 
-button {
+.pay-group input {
     flex: 1;
-    padding: 10px 14px;
+    min-width: 120px;
+    padding: 12px 16px;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1.5px solid var(--border-gold);
+    border-radius: 10px;
+    color: var(--text-light);
+    outline: none;
+    font-size: 0.95rem;
+}
+
+button {
+    padding: 12px 20px;
     border: none;
-    border-radius: 5px;
-    background-color: rgb(124, 89, 218);
-    color: white;
+    border-radius: 10px;
+    font-weight: 700;
     cursor: pointer;
-    transition: 0.3s;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    font-family: var(--font-family);
 }
 
-button:hover {
-    background-color: rgb(100, 70, 200);
+/* Pay Button (Green Theme) */
+.pay-group button:nth-of-type(1) {
+    background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+    color: var(--text-light);
+    box-shadow: 0 4px 15px rgba(45, 106, 79, 0.2);
 }
 
+.pay-group button:nth-of-type(1):hover {
+    background: linear-gradient(135deg, #40916c 0%, #2d6a4f 100%);
+    transform: translateY(-2px);
+}
+
+/* Withdraw Button (Gold Theme Outline) */
+.pay-group button:nth-of-type(2) {
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--accent-gold);
+    border: 1.5px solid var(--border-gold);
+}
+
+.pay-group button:nth-of-type(2):hover {
+    background: rgba(197, 168, 128, 0.08);
+    border-color: var(--accent-gold-hover);
+    color: var(--text-light);
+    transform: translateY(-2px);
+}
+
+/* Delete Button (Deep Red Gradient) */
 .delete-btn {
-    background-color: rgb(200, 60, 60);
+    background: linear-gradient(135deg, #d90429 0%, #a0001c 100%);
+    color: var(--text-light);
+    box-shadow: 0 4px 15px rgba(217, 4, 41, 0.25);
 }
 
 .delete-btn:hover {
-    background-color: rgb(170, 40, 40);
+    background: linear-gradient(135deg, #ef233c 0%, #d90429 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(217, 4, 41, 0.35);
+}
+
+/* Renew Button (Gold Theme) */
+.pay-group button.delete-btn:nth-of-type(2) {
+    background: linear-gradient(135deg, var(--accent-gold) 0%, #a38965 100%);
+    color: var(--primary-navy);
+    box-shadow: 0 4px 15px rgba(197, 168, 128, 0.2);
+}
+
+.pay-group button.delete-btn:nth-of-type(2):hover {
+    background: var(--accent-gold-hover);
+    transform: translateY(-2px);
 }
 
 .back-link {
-    margin-top: 15px;
+    display: block;
+    margin-top: 25px;
     text-decoration: none;
-    background-color: rgb(124, 89, 218);
-    color: white;
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-weight: bold;
-    display: inline-block;
-    transition: 0.3s;
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--accent-gold);
+    border: 1.5px solid var(--border-gold);
+    padding: 12px 24px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    align-self: center;
 }
 
 .back-link:hover {
-    background-color: rgb(100, 70, 200);
+    background: rgba(197, 168, 128, 0.08);
+    border-color: var(--accent-gold-hover);
+    color: var(--text-light);
+    transform: translateY(-2px);
 }
 
-/* Mobile Responsive */
+/* Transaction Panel (Right Column) */
+.transaction-panel {
+    flex: 0.8;
+    width: 100%;
+    background-color: var(--secondary-navy);
+    padding: 40px 30px;
+    border-radius: 24px;
+    height: 700px;
+    overflow-y: auto;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-gold);
+    box-sizing: border-box;
+}
 
-@media screen and (max-width: 600px) {
+.transaction-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0 0 30px 0;
+    color: var(--text-light);
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff 0%, var(--accent-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-    .update-container {
-        padding: 18px;
+.transaction-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.transaction-card {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 18px;
+    border-radius: 14px;
+    background-color: rgba(255, 255, 255, 0.02);
+    transition: var(--transition);
+}
+
+.transaction-card:hover {
+    border-color: var(--border-gold);
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.transaction-card p {
+    margin: 6px 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.transaction-card p:nth-child(2) {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+}
+
+.transaction-card p:nth-child(1) {
+    text-transform: capitalize;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+/* Styled Scrollbar for Transaction Panel */
+.transaction-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.transaction-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.transaction-panel::-webkit-scrollbar-thumb {
+    background-color: rgba(197, 168, 128, 0.25);
+    border-radius: 10px;
+}
+
+/* Mobile & Tablet Responsive Layout */
+@media screen and (max-width: 900px) {
+    .details-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        max-width: 95%;
     }
 
-    .update-title {
-        font-size: 22px;
+    .update-container,
+    .transaction-panel {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .transaction-panel {
+        height: 500px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .update-container {
+        padding: 30px 20px;
     }
 
     .form-group {
         flex-direction: column;
         align-items: flex-start;
+        gap: 6px;
     }
 
     .form-group label {
-        width: 100%;
-    }
-
-    .form-group input,
-    .form-group select {
         width: 100%;
     }
 
@@ -129,44 +299,8 @@ button:hover {
         flex-direction: column;
     }
 
-    button {
+    .pay-group input,
+    .pay-group button {
         width: 100%;
     }
-}
-.details-wrapper{
-    display:flex;
-    gap:20px;
-    align-items:flex-start;
-}
-
-.update-container{
-    flex:1;
-}
-
-.transaction-panel{
-    width:350px;
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    height:700px;
-    overflow-y:auto;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
-
-.transaction-title{
-    text-align:center;
-    margin-bottom:20px;
-}
-
-.transaction-list{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-
-.transaction-card{
-    border:1px solid #ccc;
-    padding:10px;
-    border-radius:8px;
-    background:#f9f9f9;
 }

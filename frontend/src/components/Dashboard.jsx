@@ -16,6 +16,7 @@ export default function Dashboard() {
       <div className="dashboard-container">
         
         <h1 className="dashboard-title">Dashboard {name}</h1>
+        <p className="dashboard-subtitle">Fincollect management portal</p>
 
         <div className="dashboard-links">
           <Link to="/ViewCustomer">View Customers</Link>

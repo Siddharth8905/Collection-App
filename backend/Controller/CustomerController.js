@@ -193,4 +193,46 @@ const get_transactions = async (req, res) => {
         })
     }
 }
-module.exports={register_customer,get_customer,get_single_customer,update_balance,delete_customer,update_Customer,get_transactions}
+const add_favorite = async (req, res) => {
+    try {
+        const { financename, id } = req.params
+
+        const Cust = getCustomerModel(financename)
+
+        const customer = await Cust.findById(id)
+
+        if (!customer) {
+            return res.status(404).json({ msg: "Customer not found" })
+        }
+
+        const updatedCustomer = await Cust.findByIdAndUpdate(
+            id,
+            { favorite: !customer.favorite },
+            { new: true }
+        )
+
+        res.json({
+            msg: "Favorite updated",
+            data: updatedCustomer
+        })
+
+    } catch (err) {
+        console.error("Error in add_favorite:", err)
+        res.status(500).json({ msg: err.message })
+    }
+}
+const get_favorites = async (req, res) => {
+    try {
+        const { financename } = req.params
+
+        const Cust = getCustomerModel(financename)
+
+        const favorites = await Cust.find({ favorite: true })
+
+        res.json(favorites)
+    }
+    catch (err) {
+        res.json({ msg: err.message })
+    }
+}
+module.exports={register_customer,get_customer,get_single_customer,update_balance,delete_customer,update_Customer,get_transactions,add_favorite,get_favorites}

@@ -19,6 +19,7 @@ export default function Dashboard() {
         <p className="dashboard-subtitle">Fincollect management portal</p>
 
         <div className="dashboard-links">
+          <Link to="/Favorites">Daily Ledger</Link>
           <Link to="/ViewCustomer">View Customers</Link>
           <Link to="/AddCustomer">Add New Customer</Link>
           <Link to="/">Logout</Link>

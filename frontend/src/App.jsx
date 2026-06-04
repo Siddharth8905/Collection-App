@@ -10,7 +10,8 @@ import AddCustomer from './components/AddCustomer'
 import ViewCustomer from './components/ViewCustomer'
 import UpdateCustomer from './components/UpdateCustomer'
 import RenewCustomer from './components/RenewCustomer'
-
+import FavCustomers from './components/FavCustomers'
+import EditCustomer from './components/EditCustomer'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -25,7 +26,10 @@ function App() {
         <Route path='/Viewcustomer' element={<ViewCustomer/>}></Route>
         <Route path='/Updatecustomer/:id' element={<UpdateCustomer/>}></Route>
         <Route path='/RenewCustomer/:id' element={<RenewCustomer/>}></Route>
-      </Routes>
+        <Route path="/Favorites" element={<FavCustomers />} />
+        <Route path="/EditCustomer/:id" element={<EditCustomer />} />
+        </Routes>
+        
       </BrowserRouter>
     </>
   )

@@ -19,4 +19,8 @@ router.delete("/deleteCustomer/:financename/:id", Cust.delete_customer)//http://
 router.put("/updatecustomer/:financename/:id", Cust.update_Customer)//http://localhost:1008/customer/updatecustomer/${financename}/${id}
 //transaction history
 router.get("/transactions/:financename/:customerid",Cust.get_transactions)//http://localhost:1008/customer/transactions/${financename}/${customerid}
+//add_favorite
+router.put("/favorite/:financename/:id",Cust.add_favorite)//http://localhost:1008/customer/favorite/${financename}/${id}
+//get_favorite
+router.get("/favorites/:financename",Cust.get_favorites)//http://localhost:1008/customer/favorites/${financename}
 module.exports=router

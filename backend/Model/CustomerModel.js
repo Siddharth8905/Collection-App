@@ -47,6 +47,10 @@ const customerSchema = mongoose.Schema({
     },
     financename:{
         type:String
+    },
+    favorite: {
+        type: Boolean,
+        default: false
     }
 })
 

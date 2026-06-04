@@ -126,6 +126,19 @@ export default function ViewCustomer() {
         }
     }
 
+    const addFavorite = async (id) => {
+        try {
+            const res = await axios.put(
+                `/customer/favorite/${name}/${id}`
+            )
+            console.log("Favorite API Response:", res.data)
+            fetchcust()
+        }
+        catch (err) {
+            console.error("Error toggling favorite:", err)
+            alert("Error updating favorite: " + (err.response?.data?.msg || err.message))
+        }
+    }
     return (
 
         <div className="main">
@@ -174,6 +187,7 @@ export default function ViewCustomer() {
                                 <th>Balance</th>
                                 <th>Pay</th>
                                 <th>Update</th>
+                                <th>Favorite</th>
                             </tr>
 
                         </thead>
@@ -258,6 +272,14 @@ export default function ViewCustomer() {
                                                 Update
                                             </button>
 
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                onClick={() => addFavorite(cust._id)}
+                                            >
+                                                {cust.favorite ? "★" : "☆"}
+                                            </button>
                                         </td>
 
                                     </tr>

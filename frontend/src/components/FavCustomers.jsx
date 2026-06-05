@@ -84,7 +84,7 @@ const updateBalance = async (cust) => {
                 }
             )
 
-            alert("Payment Updated Successfully")
+            // alert("Payment Updated Successfully")
 
             // REFRESH CUSTOMER DATA
             loadFavorites()
@@ -99,71 +99,73 @@ const updateBalance = async (cust) => {
                 <h1 className="view-title">
                     Daily Ledger - {name}
                 </h1>
-                <table className="customer-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Amount</th>
-                            
-                            {/* <th>Installment</th> */}
-                            <th>Balance</th>
-                            <th>Pay</th>
-                            <th>Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {favorites.length > 0 ? (
-                            favorites.map((cust) => (
-                                <tr key={cust._id}>
-                                    <td>{cust.cust_name}</td>
-                                    <td>{cust.cust_amt}</td>
-                                    {/* <td>{cust.installment}</td> */}
-                                    <td>{cust.balance}</td>
-                                    <td>
-                                        <input
-                                                type="number"
-
-                                                // DEFAULT VALUE
-                                                value={
-                                                    payments[cust._id] || ""
-                                                }
-
-                                                // UPDATE PAYMENT VALUE
-                                                onChange={(e) =>
-                                                    setPayments({
-                                                        ...payments,
-                                                        [cust._id]:
-                                                            e.target.value
-                                                    })
-                                                }
-                                            />
-
-                                            <button
-                                                type="button"
-
-                                                // PASS CUSTOMER
-                                                onClick={() =>
-                                                    updateBalance(cust)
-                                                }
-                                            >
-                                                Pay
-                                            </button>
-
-                                    </td>
-                                    <td>
-                                        <button onClick={() =>handleUpdate(cust._id)}>Edit</button>
+                <div className="table-wrapper fav-table-wrapper">
+                    <table className="customer-table fav-customer-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                {/* <th>Amount</th> */}
+                                
+                                {/* <th>Installment</th> */}
+                                <th>Balance</th>
+                                <th>Pay</th>
+                                <th>Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {favorites.length > 0 ? (
+                                favorites.map((cust) => (
+                                    <tr key={cust._id}>
+                                        <td>{cust.cust_name}</td>
+                                        {/* <td>{cust.cust_amt}</td> */}
+                                        {/* <td>{cust.installment}</td> */}
+                                        <td>{cust.balance}</td>
+                                        <td>
+                                            <input
+                                                    type="number"
+    
+                                                    // DEFAULT VALUE
+                                                    value={
+                                                        payments[cust._id] || ""
+                                                    }
+    
+                                                    // UPDATE PAYMENT VALUE
+                                                    onChange={(e) =>
+                                                        setPayments({
+                                                            ...payments,
+                                                            [cust._id]:
+                                                                e.target.value
+                                                        })
+                                                    }
+                                                />
+    
+                                                <button
+                                                    type="button"
+    
+                                                    // PASS CUSTOMER
+                                                    onClick={() =>
+                                                        updateBalance(cust)
+                                                    }
+                                                >
+                                                    Pay
+                                                </button>
+    
+                                        </td>
+                                        <td>
+                                            <button onClick={() =>handleUpdate(cust._id)}>Edit</button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="7">
+                                        No favorite customers found
                                     </td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="7">
-                                    No favorite customers found
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
                 <Link className="back-link" to="/Dashboard">Back</Link>
             </div>
         </div>

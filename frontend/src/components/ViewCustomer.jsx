@@ -44,7 +44,7 @@ export default function ViewCustomer() {
             )
 
             console.log("API DATA:", res.data)
-
+            
             setCustomers(res.data)
 
             // NEWLY ADDED

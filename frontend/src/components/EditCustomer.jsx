@@ -112,7 +112,7 @@ export default function UpdateCustomer() {
 
             await fetchcust()
             alert("Balance Updated")
-            navigate("/Viewcustomer")
+            // navigate("/Viewcustomer")
 
         }
         catch (err) {

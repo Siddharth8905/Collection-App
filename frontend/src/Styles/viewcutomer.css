@@ -88,6 +88,7 @@
 
 .table-wrapper {
     width: 100%;
+    max-height: 500px;
     overflow-x: auto;
     overflow-y: auto;
     border: 1px solid var(--border-gold);
@@ -103,7 +104,7 @@
 }
 
 .customer-table th {
-    background-color: rgba(197, 168, 128, 0.1);
+    background-color: var(--secondary-navy);
     color: var(--accent-gold);
     padding: 16px 12px;
     text-align: left;
@@ -251,5 +252,40 @@
 
     .summary {
         font-size: 0.95rem;
+    }
+}
+
+/* Favorites specific styling */
+.fav-table-wrapper {
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.fav-customer-table {
+    min-width: 100% !important;
+    width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+    .fav-customer-table th,
+    .fav-customer-table td {
+        padding: 8px 6px;
+        font-size: 0.8rem;
+    }
+
+    .fav-customer-table td input[type="number"] {
+        width: 55px !important;
+        padding: 6px 4px !important;
+        margin-right: 4px !important;
+        font-size: 0.75rem !important;
+    }
+
+    .fav-customer-table td button {
+        padding: 6px 10px !important;
+        font-size: 0.75rem !important;
+    }
+    
+    .fav-customer-table td {
+        white-space: nowrap;
     }
 }

@@ -227,7 +227,10 @@ const get_favorites = async (req, res) => {
 
         const Cust = getCustomerModel(financename)
 
-        const favorites = await Cust.find({ favorite: true })
+        const favorites = await Cust.find({ 
+            favorite: true,
+            collection_type: "daily"
+        })
 
         res.json(favorites)
     }

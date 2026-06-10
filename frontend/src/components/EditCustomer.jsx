@@ -60,18 +60,36 @@ export default function UpdateCustomer() {
         try {
 
             const currentBalance = Number(customer.balance)
-            // const currentPaid = Number(customer.paid)
-
             const newbalance = currentBalance - payAmount
-            // const newpaid = currentPaid + payAmount
+
+            let penaltyAmount = 0
+            if (newbalance === 0) {
+                const getYYYYMMDD = (date) => {
+                    const d = new Date(date)
+                    const year = d.getFullYear()
+                    const month = String(d.getMonth() + 1).padStart(2, '0')
+                    const day = String(d.getDate()).padStart(2, '0')
+                    return `${year}-${month}-${day}`
+                }
+                const todayStr = getYYYYMMDD(new Date())
+                const endStr = getYYYYMMDD(customer.end_date)
+                
+                if (todayStr > endStr) {
+                    const enterPenalty = confirm("This due is being completed after the end date. Do you want to impose a penalty?")
+                    if (enterPenalty) {
+                        const inputPenalty = prompt("Enter penalty amount (0 for none):", "0")
+                        penaltyAmount = Number(inputPenalty) || 0
+                    }
+                }
+            }
 
             await axios.put(
                 `/customer/updatebalance/${name}/${id}`,
                 {
                     balance: newbalance,
-                    // paid: newpaid
                     amount: payAmount,
-                    type: "payment"
+                    type: "payment",
+                    penaltyAmount: penaltyAmount
                 }
             )
 
@@ -188,6 +206,9 @@ export default function UpdateCustomer() {
                             <button type="button" className="delete-btn" onClick={renewcustomer} >
                                 Renew Customer
                             </button>
+                            <button type="button" className="delete-btn" style={{ background: "rgba(197, 168, 128, 0.15)", color: "var(--accent-gold)", border: "1px solid var(--border-gold)" }} onClick={() => navigate("/CustomerHistory", { state: { customerId: id } })}>
+                                History
+                            </button>
                             <Link className="back-link" to="/Favorites">Back</Link>
                         </div>
 
@@ -207,6 +228,9 @@ export default function UpdateCustomer() {
                             </button>
                             <button type="button" onClick={withdrawBalance}>
                                 WithDraw
+                            </button>
+                            <button type="button" style={{ background: "rgba(197, 168, 128, 0.15)", color: "var(--accent-gold)", border: "1px solid var(--border-gold)" }} onClick={() => navigate("/CustomerHistory", { state: { customerId: id } })}>
+                                History
                             </button><br/>
                             <Link className="back-link" to="/Favorites">Back</Link>
                         </div>

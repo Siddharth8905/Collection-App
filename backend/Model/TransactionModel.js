@@ -19,13 +19,30 @@ const transactionSchema = mongoose.Schema({
 
     type: {
         type: String,
-        enum: ["payment", "withdraw"],
+        enum: ["payment", "withdraw", "penalty", "due_completed"],
         required: true
     },
 
     payment_date: {
         type: Date,
         default: Date.now
+    },
+
+    borrowed_amount: {
+        type: Number
+    },
+
+    start_date: {
+        type: Date
+    },
+
+    end_date: {
+        type: Date
+    },
+
+    penalty_amount: {
+        type: Number,
+        default: 0
     }
 })
 

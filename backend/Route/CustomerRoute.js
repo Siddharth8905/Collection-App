@@ -23,4 +23,8 @@ router.get("/transactions/:financename/:customerid",Cust.get_transactions)//http
 router.put("/favorite/:financename/:id",Cust.add_favorite)//http://localhost:1008/customer/favorite/${financename}/${id}
 //get_favorite
 router.get("/favorites/:financename",Cust.get_favorites)//http://localhost:1008/customer/favorites/${financename}
+//today collection
+router.get("/todaycollection/:financename",Cust.get_today_collection)
+//history
+router.get("/history/:financename", Cust.get_all_completed_dues)
 module.exports=router

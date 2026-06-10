@@ -8,6 +8,7 @@ export default function Favorites() {
     const [favorites, setFavorites] = useState([])
     const [loading, setLoading] = useState(true)
     const [payments, setPayments] = useState({})
+    const [todayCollection, setTodayCollection] = useState(0)
     const navigate = useNavigate()
     const name = localStorage.getItem("financename") || ""
 
@@ -33,6 +34,14 @@ export default function Favorites() {
                 defaultPayments[cust._id] = cust.installment
             })
             setPayments(defaultPayments)
+
+            const collectionRes = await axios.get(
+                `/customer/todaycollection/${name}`
+            )
+
+            setTodayCollection(
+                collectionRes.data.totalCollection
+            )
         } catch (err) {
             console.log(
                 "ERROR:",
@@ -66,13 +75,28 @@ const updateBalance = async (cust) => {
 
 
             // CALCULATE NEW BALANCE
-            // if(cust.balance-payAmount>=0){
-                const newBalance =
-                Number(cust.balance) - payAmount
+            const newBalance = currentBalance - payAmount
 
-            // }
-            
-            
+            let penaltyAmount = 0
+            if (newBalance === 0) {
+                const getYYYYMMDD = (date) => {
+                    const d = new Date(date)
+                    const year = d.getFullYear()
+                    const month = String(d.getMonth() + 1).padStart(2, '0')
+                    const day = String(d.getDate()).padStart(2, '0')
+                    return `${year}-${month}-${day}`
+                }
+                const todayStr = getYYYYMMDD(new Date())
+                const endStr = getYYYYMMDD(cust.end_date)
+
+                if (todayStr > endStr) {
+                    const enterPenalty = confirm("This due is being completed after the end date. Do you want to impose a penalty?")
+                    if (enterPenalty) {
+                        const inputPenalty = prompt("Enter penalty amount (0 for none):", "0")
+                        penaltyAmount = Number(inputPenalty) || 0
+                    }
+                }
+            }
 
             // API CALL
             await axios.put(
@@ -80,11 +104,12 @@ const updateBalance = async (cust) => {
                 {
                     balance: newBalance,
                     amount: payAmount,
-                    type: "payment"
+                    type: "payment",
+                    penaltyAmount: penaltyAmount
                 }
             )
 
-            // alert("Payment Updated Successfully")
+            alert("Payment Updated Successfully")
 
             // REFRESH CUSTOMER DATA
             loadFavorites()
@@ -99,6 +124,9 @@ const updateBalance = async (cust) => {
                 <h1 className="view-title">
                     Daily Ledger - {name}
                 </h1>
+                <h2>
+                    Today's Collection: ₹{todayCollection}
+                </h2>
                 <div className="table-wrapper fav-table-wrapper">
                     <table className="customer-table fav-customer-table">
                         <thead>

@@ -1,6 +1,7 @@
 // const Cust=require("../Model/CustomerModel")
 const getCustomerModel = require("../Model/CustomerModel")
 const getTransactionModel =require("../Model/TransactionModel")
+// const getTodayPayment = require("../Model/TodayCollectionModel")
 
 const register_customer=async(req,res)=>{
     try{
@@ -74,7 +75,7 @@ const update_balance = async (req, res) => {
     try {
 
         const { financename, id } = req.params
-        const { balance, amount, type } = req.body
+        const { balance, amount, type, penaltyAmount } = req.body
 
         const Cust = getCustomerModel(financename)
         const Transaction =
@@ -103,6 +104,21 @@ const update_balance = async (req, res) => {
 
             type: type
         })
+
+        // IF DUE COMPLETED (balance is 0), LOG HISTORY TRANSACTION
+        if (Number(balance) === 0) {
+            await Transaction.create({
+                customer_id: customer._id,
+                cust_name: customer.cust_name,
+                amount: 0,
+                type: "due_completed",
+                borrowed_amount: customer.cust_amt,
+                start_date: customer.start_date,
+                end_date: customer.end_date,
+                penalty_amount: penaltyAmount ? Number(penaltyAmount) : 0,
+                payment_date: new Date()
+            })
+        }
 
         return res.json({
             msg: "Customer updated",
@@ -238,4 +254,56 @@ const get_favorites = async (req, res) => {
         res.json({ msg: err.message })
     }
 }
-module.exports={register_customer,get_customer,get_single_customer,update_balance,delete_customer,update_Customer,get_transactions,add_favorite,get_favorites}
+const get_today_collection = async (req, res) => {
+
+    try {
+
+        const { financename } = req.params
+        const Transaction =getTransactionModel(financename)
+        const start = new Date()
+        start.setHours(0, 0, 0, 0)
+        const end = new Date()
+        end.setHours(23, 59, 59, 999)
+        const transactions =
+            await Transaction.find({
+                type: "payment",
+                payment_date: {
+                    $gte: start,
+                    $lte: end
+                }
+            })
+
+        const totalCollection =
+            transactions.reduce(
+                (sum, t) => sum + Number(t.amount),
+                0
+            )
+        res.json({
+            totalCollection
+        })
+    } catch (err) {
+        res.json({
+            msg: err.message
+        })
+    }
+}
+const get_all_completed_dues = async (req, res) => {
+    try {
+        const { financename } = req.params
+        const { customerId } = req.query
+        const Transaction = getTransactionModel(financename)
+        
+        const filter = { type: "due_completed" }
+        if (customerId) {
+            filter.customer_id = customerId
+        }
+
+        const completedDues = await Transaction.find(filter).sort({ payment_date: -1 })
+        res.json(completedDues)
+    } catch (err) {
+        res.json({
+            msg: err.message
+        })
+    }
+}
+module.exports={register_customer,get_customer,get_single_customer,update_balance,delete_customer,update_Customer,get_transactions,add_favorite,get_favorites,get_today_collection,get_all_completed_dues}

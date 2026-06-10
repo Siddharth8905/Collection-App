@@ -12,6 +12,7 @@ import UpdateCustomer from './components/UpdateCustomer'
 import RenewCustomer from './components/RenewCustomer'
 import FavCustomers from './components/FavCustomers'
 import EditCustomer from './components/EditCustomer'
+import CustomerHistory from './components/CustomerHistory'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -28,6 +29,7 @@ function App() {
         <Route path='/RenewCustomer/:id' element={<RenewCustomer/>}></Route>
         <Route path="/Favorites" element={<FavCustomers />} />
         <Route path="/EditCustomer/:id" element={<EditCustomer />} />
+        <Route path="/CustomerHistory" element={<CustomerHistory />} />
         </Routes>
         
       </BrowserRouter>

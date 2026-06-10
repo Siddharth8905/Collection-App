@@ -22,6 +22,7 @@ export default function Dashboard() {
           <Link to="/Favorites">Daily Ledger</Link>
           <Link to="/ViewCustomer">View Customers</Link>
           <Link to="/AddCustomer">Add New Customer</Link>
+          <Link to="/CustomerHistory">Due History</Link>
           <Link to="/">Logout</Link>
         </div>
 

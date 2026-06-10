@@ -98,13 +98,28 @@ export default function ViewCustomer() {
 
 
             // CALCULATE NEW BALANCE
-            // if(cust.balance-payAmount>=0){
-                const newBalance =
-                Number(cust.balance) - payAmount
+            const newBalance = currentBalance - payAmount
 
-            // }
-            
-            
+            let penaltyAmount = 0
+            if (newBalance === 0) {
+                const getYYYYMMDD = (date) => {
+                    const d = new Date(date)
+                    const year = d.getFullYear()
+                    const month = String(d.getMonth() + 1).padStart(2, '0')
+                    const day = String(d.getDate()).padStart(2, '0')
+                    return `${year}-${month}-${day}`
+                }
+                const todayStr = getYYYYMMDD(new Date())
+                const endStr = getYYYYMMDD(cust.end_date)
+
+                if (todayStr > endStr) {
+                    const enterPenalty = confirm("This due is being completed after the end date. Do you want to impose a penalty?")
+                    if (enterPenalty) {
+                        const inputPenalty = prompt("Enter penalty amount (0 for none):", "0")
+                        penaltyAmount = Number(inputPenalty) || 0
+                    }
+                }
+            }
 
             // API CALL
             await axios.put(
@@ -112,7 +127,8 @@ export default function ViewCustomer() {
                 {
                     balance: newBalance,
                     amount: payAmount,
-                    type: "payment"
+                    type: "payment",
+                    penaltyAmount: penaltyAmount
                 }
             )
 

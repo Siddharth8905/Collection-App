@@ -192,7 +192,9 @@ button {
     padding: 40px 30px;
     border-radius: 24px;
     height: 700px;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     box-shadow: var(--shadow);
     border: 1px solid var(--border-gold);
     box-sizing: border-box;
@@ -207,12 +209,16 @@ button {
     background: linear-gradient(135deg, #ffffff 0%, var(--accent-gold) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    flex-shrink: 0;
 }
 
 .transaction-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px;
 }
 
 .transaction-card {
@@ -246,16 +252,16 @@ button {
     color: var(--text-light);
 }
 
-/* Styled Scrollbar for Transaction Panel */
-.transaction-panel::-webkit-scrollbar {
+/* Styled Scrollbar for Transaction List */
+.transaction-list::-webkit-scrollbar {
     width: 6px;
 }
 
-.transaction-panel::-webkit-scrollbar-track {
+.transaction-list::-webkit-scrollbar-track {
     background: transparent;
 }
 
-.transaction-panel::-webkit-scrollbar-thumb {
+.transaction-list::-webkit-scrollbar-thumb {
     background-color: rgba(197, 168, 128, 0.25);
     border-radius: 10px;
 }
@@ -276,12 +282,18 @@ button {
     }
 
     .transaction-panel {
-        height: 500px;
+        height: auto;
+        max-height: 480px;
+    }
+
+    .transaction-list {
+        max-height: 380px; /* Show approximately 3 transaction cards initially */
     }
 }
 
 @media screen and (max-width: 600px) {
-    .update-container {
+    .update-container,
+    .transaction-panel {
         padding: 30px 20px;
     }
 
